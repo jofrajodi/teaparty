@@ -2,13 +2,23 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>The Magical Tea Party · Ensayo interactivo</title>
+<meta name="description" content="Ensayo interactivo de la obra The Magical Tea Party. Avanza escena por escena y practica tus líneas.">
+<meta name="theme-color" content="#3a1a5a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Magical Tea Party 🍵">
+<meta property="og:description" content="Ensayo interactivo de la obra. Ábrelo, gira el celular y practica tus líneas.">
+<meta property="og:url" content="https://jofrajodi.github.io/teaparty/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%84%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
-html,body{margin:0;height:100%;background:#140c22;overflow:hidden;font-family:'Fredoka','Trebuchet MS','Comic Sans MS',sans-serif;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;width:100%;position:fixed;inset:0;overscroll-behavior:none;touch-action:manipulation;-webkit-text-size-adjust:100%;background:#140c22;overflow:hidden;font-family:'Fredoka','Trebuchet MS','Comic Sans MS',sans-serif;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #stage{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0;overflow:hidden;background:#000;border-radius:6px}
 #svg{position:absolute;left:0;top:0;width:1600px;height:900px;display:block}
 .layer{position:absolute;inset:0;pointer-events:none}
@@ -78,13 +88,13 @@ html,body{margin:0;height:100%;background:#140c22;overflow:hidden;font-family:'F
 #hud{position:absolute;left:96px;top:22px;display:flex;gap:12px;align-items:center;pointer-events:none}
 .pill{font-family:'Press Start 2P',monospace;font-size:15px;background:rgba(43,27,61,.85);color:#ffe9a8;padding:10px 14px;border-radius:12px;border:3px solid #ffcf3f}
 #bar{position:absolute;left:0;right:0;bottom:0;height:84px;display:flex;align-items:center;gap:12px;padding:0 90px;box-sizing:border-box;background:linear-gradient(rgba(20,10,35,0),rgba(20,10,35,.8))}
-.btn{font-family:'Press Start 2P',monospace;font-size:17px;background:#ffcf3f;border:4px solid #2b1b3d;border-radius:12px;box-shadow:0 5px 0 #2b1b3d;padding:10px 14px;cursor:pointer;color:#2b1b3d;line-height:1}
+.btn{font-family:'Press Start 2P',monospace;font-size:20px;min-width:58px;min-height:52px;background:#ffcf3f;border:4px solid #2b1b3d;border-radius:12px;box-shadow:0 5px 0 #2b1b3d;padding:10px 14px;cursor:pointer;color:#2b1b3d;line-height:1}
 .btn:hover{background:#ffe066}.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #2b1b3d}
 .btn.off{background:#9c8fb0}
-.btn.sm{font-size:13px;padding:9px 11px}
+.btn.sm{font-size:16px;padding:9px 11px;min-width:52px}
 #prog{flex:1;height:18px;background:rgba(255,255,255,.2);border-radius:10px;border:3px solid #2b1b3d;position:relative;overflow:hidden;cursor:pointer}
 #progFill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#ff7eb6,#ffcf3f);width:0;transition:width .3s}
-.scb{font-family:'Press Start 2P',monospace;font-size:12px;width:36px;height:36px;border-radius:50%;border:3px solid #2b1b3d;background:#fff;cursor:pointer;color:#2b1b3d}
+.scb{font-family:'Press Start 2P',monospace;font-size:14px;width:46px;height:46px;border-radius:50%;border:3px solid #2b1b3d;background:#fff;cursor:pointer;color:#2b1b3d}
 .scb.on{background:#ff7eb6;color:#fff}
 #titleCard{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);text-align:center;display:none;pointer-events:none}
 #titleCard.show{display:block;animation:tIn 1.9s ease-in-out forwards}
@@ -107,6 +117,17 @@ html,body{margin:0;height:100%;background:#140c22;overflow:hidden;font-family:'F
 .big{font-size:30px;padding:18px 34px}
 .rolehint{font-size:22px;margin-top:6px;color:#ffe9a8;min-height:30px}
 #end h1{font-size:120px}
+#rotate{position:fixed;left:50%;top:max(14px,env(safe-area-inset-top));transform:translateX(-50%);z-index:999;display:none;align-items:center;gap:14px;width:min(92vw,420px);box-sizing:border-box;background:#3a1a5a;border:3px solid #ffcf3f;border-radius:18px;padding:12px 14px;color:#fff;font-family:'Fredoka','Trebuchet MS',sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+#rotate.show{display:flex;animation:rIn .4s ease-out}
+@keyframes rIn{0%{opacity:0;transform:translate(-50%,-20px)}}
+#rotate .ph{flex:0 0 auto;width:30px;height:50px;border:4px solid #ffcf3f;border-radius:8px;position:relative;animation:rot 2.2s ease-in-out infinite;box-sizing:border-box}
+#rotate .ph::after{content:'';position:absolute;left:50%;bottom:3px;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:#ffcf3f}
+@keyframes rot{0%,25%{transform:rotate(0)}55%,85%{transform:rotate(-90deg)}100%{transform:rotate(0)}}
+#rotate .tx{flex:1;font-size:17px;line-height:1.25}
+#rotate .tx b{color:#ffcf3f;font-size:19px}
+#rotate .x{flex:0 0 auto;background:#ffcf3f;color:#2b1b3d;border:none;border-radius:10px;font-weight:700;font-size:16px;padding:8px 12px;font-family:inherit}
+#inapp{display:none;margin:-4px 0 12px;font-size:20px;background:rgba(255,207,63,.18);border:3px solid #ffcf3f;border-radius:16px;padding:10px 18px;max-width:1100px}
+#inapp a{color:#2b1b3d;background:#ffcf3f;border-radius:10px;padding:6px 14px;text-decoration:none;font-weight:700;margin-left:8px;display:inline-block}
 #hint{position:absolute;left:50%;bottom:110px;transform:translateX(-50%);font-family:'Press Start 2P',monospace;font-size:14px;color:#fff;background:rgba(43,27,61,.8);padding:10px 16px;border-radius:10px;animation:blinkHint 1.2s steps(1) infinite;display:none;pointer-events:none}
 @keyframes blinkHint{50%{opacity:.25}}
 </style>
@@ -144,6 +165,7 @@ html,body{margin:0;height:100%;background:#140c22;overflow:hidden;font-family:'F
     <div class="cast" id="cast"></div>
     <div class="rolehint" id="roleHint">Toca tu personaje para practicar tus líneas (o deja ninguno para solo mirar).</div>
     <div class="howto">Avanza con <b>clic</b>, <b>espacio</b> o <b>→</b>. Retrocede con <b>←</b>. <b>F</b> pantalla completa, <b>M</b> música.<br>Si eliges un personaje, sus líneas aparecen ocultas: dila en voz alta y luego avanza para comprobarla.</div>
+    <div id="inapp"></div>
     <button class="btn big" id="bStart">▶ START</button>
   </div>
   <div class="screen hide" id="end">
@@ -156,6 +178,7 @@ html,body{margin:0;height:100%;background:#140c22;overflow:hidden;font-family:'F
   </div>
 </div>
 
+<div id="rotate"><div class="ph"></div><div class="tx"><b>Gira tu celular</b><br>para ver la obra mejor.</div><button class="x" id="rotX">OK</button></div>
 <script>
 'use strict';
 /* =====================================================================
@@ -549,7 +572,8 @@ const STEPS = [
   {cap:'Todas miran a la conejo… y ella saca un vaso de sus orejas.',
    act:s=>{ carry(s,'cup4','rab'); mood(s,'rab','laugh'); mood(s,'sof','happy'); },
    say:['rab',"That's me! But don't worry... I always keep an extra cup in my bunny ears!"]},
-  {act:s=>{ place(s,'cup4',slot('cup4')); mood(s,IDS,'laugh'); }, say:[IDS,"Ha, ha, ha!"]},
+  {act:s=>{ place(s,'cup4',slot('cup4')); mood(s,'sof','laugh'); face(s,'sof',1); }, say:['sof',"Yay! Now we all have a cup!"]},
+  {act:s=>mood(s,IDS,'laugh'), say:[IDS,"Ha, ha, ha!"]},
   {cap:'Fin. Pasan al frente para despedirse del público.',
    act:s=>{ sit(s,IDS,false); mood(s,IDS,'happy'); s.prints = [];
      walk(s,'sof',[870,740],[345,762]); walk(s,'ana',[870,740],[495,768]); walk(s,'tif',[870,740],[645,768]); walk(s,'rab',[1290,740],[870,740],[790,762]);
@@ -1034,14 +1058,38 @@ function refreshRole(){
   const rl = $('#roleLbl'); rl.style.display = role ? 'block' : 'none'; rl.textContent = role ? '🎤 ' + CHARS[role].name.toUpperCase() : '';
 }
 
+function viewSize(){
+  const vv = window.visualViewport;
+  return vv ? [vv.width, vv.height] : [innerWidth, innerHeight];
+}
+const IS_TOUCH = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+const IS_PHONE = IS_TOUCH && Math.min(screen.width, screen.height) < 900;
+let rotateDismissed = false;
+function checkRotate(){
+  const [w,h] = viewSize();
+  const portrait = h > w;
+  if (!portrait) rotateDismissed = false;
+  $('#rotate').classList.toggle('show', IS_PHONE && portrait && !rotateDismissed);
+}
 function fit(){
+  const [vw, vh] = viewSize();
+  const innerWidth = vw, innerHeight = vh;
+  checkRotate();
   const s = Math.min(innerWidth/W, innerHeight/H);
   const st = $('#stage');
   st.style.transform = `scale(${s})`;
   st.style.left = ((innerWidth - W*s)/2)+'px';
   st.style.top = ((innerHeight - H*s)/2)+'px';
 }
-addEventListener('resize', fit); fit();
+addEventListener('resize', fit);
+addEventListener('orientationchange', ()=>{ fit(); setTimeout(fit, 250); setTimeout(fit, 700); });
+if (window.visualViewport) visualViewport.addEventListener('resize', fit);
+fit();
+$('#rotX').addEventListener('click', e=>{ e.stopPropagation(); rotateDismissed = true; checkRotate(); });
+$('#rotate').addEventListener('touchend', e=>e.stopPropagation());
+document.addEventListener('visibilitychange', ()=>{ if (!actx) return; if (document.hidden) actx.suspend(); else actx.resume(); });
+document.addEventListener('gesturestart', e=>e.preventDefault());
+document.addEventListener('dblclick', e=>e.preventDefault());
 
 function toggleFull(){
   const d = document;
@@ -1049,10 +1097,35 @@ function toggleFull(){
   else (d.exitFullscreen||d.webkitExitFullscreen).call(d);
 }
 
+async function goLandscape(){
+  const el = document.documentElement;
+  try {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement){
+      const rq = el.requestFullscreen || el.webkitRequestFullscreen;
+      if (rq){ const r = rq.call(el, {navigationUI:'hide'}); if (r && r.then) await r.catch(()=>{}); }
+    }
+  } catch(e){}
+  try { if (screen.orientation && screen.orientation.lock) await screen.orientation.lock('landscape').catch(()=>{}); } catch(e){}
+  setTimeout(fit, 300);
+}
+function setupInApp(){
+  const ua = navigator.userAgent || '';
+  const inApp = /WhatsApp|FBAN|FBAV|FB_IAB|Instagram|Line\/|Telegram|; wv\)/i.test(ua);
+  const box = $('#inapp');
+  if (!inApp) return;
+  const isAndroid = /Android/i.test(ua);
+  if (isAndroid){
+    const intent = 'intent://' + location.host + location.pathname + '#Intent;scheme=https;package=com.android.chrome;end';
+    box.innerHTML = 'Para verla en pantalla completa, ábrela en el navegador: <a href="' + intent + '">Abrir en Chrome</a>';
+  } else {
+    box.innerHTML = 'Para verla mejor, ábrela en Safari: toca el botón <b>⋯</b> o <b>Compartir</b> y elige <b>Abrir en el navegador</b>.';
+  }
+  box.style.display = 'block';
+}
 function startGame(){
   initAudio();
   if (actx && actx.state==='suspended') actx.resume();
-  try { const el=document.documentElement; if (!document.fullscreenElement) (el.requestFullscreen||el.webkitRequestFullscreen).call(el); } catch(e){}
+  goLandscape();
   $('#start').classList.add('hide'); $('#end').classList.add('hide');
   revealed = false;
   snapState(states[0]);
@@ -1083,9 +1156,10 @@ addEventListener('keydown', e=>{
 });
 let tx = null;
 addEventListener('touchstart', e=>{ tx = e.touches[0].clientX; }, {passive:true});
-addEventListener('touchend', e=>{ if (tx===null) return; const dx = e.changedTouches[0].clientX - tx; tx = null; if (Math.abs(dx) > 60){ dx < 0 ? next() : back(); } }, {passive:true});
+addEventListener('touchend', e=>{ if (tx===null) return; if (!$('#start').classList.contains('hide') || !$('#end').classList.contains('hide')){ tx=null; return; } const dx = e.changedTouches[0].clientX - tx; tx = null; if (Math.abs(dx) > 60){ dx < 0 ? next() : back(); } }, {passive:true});
 
-buildCast(); refreshRole();
+buildCast(); refreshRole(); setupInApp();
+if (!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen)) $('#bFull').style.display = 'none';
 snapState(states[0]);
 </script>
 </body>
